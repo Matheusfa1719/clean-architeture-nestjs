@@ -11,11 +11,19 @@ export class UserRepository implements IUserRepository {
     private userRepository: Repository<User>,
   ) {}
 
+  findById(id: string) {
+    return this.userRepository.findOne({ where: { id } });
+  }
+
   findByEmail(email: string) {
     return this.userRepository.findOneBy({ email });
   }
 
   async create(createUserDto: CreateUserDto) {
     return this.userRepository.insert(createUserDto);
+  }
+
+  delete(id: string) {
+    return this.userRepository.delete({ id: id });
   }
 }
