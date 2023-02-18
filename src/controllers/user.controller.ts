@@ -6,10 +6,12 @@ import {
   HttpCode,
   Param,
   Post,
+  Put,
   UseFilters,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateUserDto } from 'src/core/shared/dtos';
+import { UpdateUserDto } from 'src/core/shared/dtos/user/updateUser.dto';
 import { HttpExceptionFilter } from 'src/core/shared/errors';
 import { UserUseCases } from 'src/use-cases/user/user.use-case';
 
@@ -34,5 +36,10 @@ export class UserController {
   @HttpCode(204)
   deleteUser(@Param('id') id: string) {
     return this.userUseCases.delete(id);
+  }
+
+  @Put()
+  updateUser(@Body() updateUserDto: UpdateUserDto) {
+    return this.userUseCases.updateUser(updateUserDto);
   }
 }

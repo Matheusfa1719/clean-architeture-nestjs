@@ -1,5 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateUserDto } from 'src/core/shared/dtos';
+import { UpdateUserDto } from 'src/core/shared/dtos/user/updateUser.dto';
 import { UserRepository } from 'src/frameworks/database/repository/user.repository';
 import { HashServices } from 'src/services/hash';
 import { UserFactory } from './user.factory';
@@ -37,5 +38,16 @@ export class UserUseCases {
       throw new HttpException('Fail to delete User', HttpStatus.NOT_FOUND);
     }
     return await this.userRepository.delete(id);
+  }
+
+  async updateUser(updateUserDto: UpdateUserDto) {
+    const user = await this.userRepository.findById(updateUserDto.id);
+    if (!user) {
+      throw new HttpException('Fail to delete User', HttpStatus.NOT_FOUND);
+    }
+    updateUserDto.password = await this.hashService.encrypt(
+      updateUserDto.password,
+    );
+    return this.userRepository.update(updateUserDto);
   }
 }

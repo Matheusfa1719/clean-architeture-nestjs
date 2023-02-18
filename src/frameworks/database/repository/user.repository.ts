@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { IUserRepository } from 'src/core/contracts/repository/user';
-import { CreateUserDto } from 'src/core/shared/dtos';
+import { CreateUserDto, UpdateUserDto } from 'src/core/shared/dtos';
 import { Repository } from 'typeorm';
 import { User } from '../entity';
 
@@ -25,5 +25,9 @@ export class UserRepository implements IUserRepository {
 
   delete(id: string) {
     return this.userRepository.delete({ id: id });
+  }
+
+  update(updateUserDto: UpdateUserDto): Promise<any> {
+    return this.userRepository.update({ id: updateUserDto.id }, updateUserDto);
   }
 }
