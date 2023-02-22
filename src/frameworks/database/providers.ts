@@ -7,7 +7,7 @@ import {
   NODE_ENV,
 } from 'src/core/shared/environment';
 import { DataSource } from 'typeorm';
-import { User } from './entity';
+import { Gcem, User } from './entity';
 
 export const databaseProviders = [
   {
@@ -20,7 +20,7 @@ export const databaseProviders = [
         username: DB_USER,
         password: DB_PASSWORD,
         database: DB_DATABASE,
-        entities: [User],
+        entities: [User, Gcem],
         synchronize: NODE_ENV === 'local' ? true : false,
       });
 
